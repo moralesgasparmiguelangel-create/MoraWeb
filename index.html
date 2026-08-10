@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoraWeb</title>
+  
+  <!-- Tipografía: Space Grotesk desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset e Identidad Visual Oscura */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #09090b; /* Fondo ultra oscuro */
+      color: #f4f4f5;
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 12px;
+    }
+
+    .feed-container {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Contenedor principal del encabezado */
+    .profile-card {
+      background: #121215;
+      border: 1px solid #27272a;
+      border-radius: 20px;
+      overflow: hidden; /* Corta la imagen de portada dentro de las esquinas redondeadas */
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 1. Foto de Portada */
+    .profile-banner {
+      width: 100%;
+      height: 130px; /* Ajusta la altura de tu portada aquí */
+      background: #18181b;
+      overflow: hidden;
+    }
+
+    .banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 2. Cuerpo: Avatar a la izquierda e Info a la derecha */
+    .profile-body {
+      padding: 0 20px 20px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    /* Foto de Perfil (Sobrepuesta en la portada) */
+    .profile-avatar {
+      width: 95px;
+      height: 95px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #121215; /* Marco oscuro que recorta contra la portada */
+      box-shadow: 0 0 0 2px #a855f7; /* Borde externo neón */
+      margin-top: -42px; /* Hace subirse la foto encima de la portada */
+      flex-shrink: 0;
+      background: #121215;
+    }
+
+    /* 3. Columna derecha de la información */
+    .profile-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 10px;
+    }
+
+    .profile-info h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .profile-info .username {
+      font-size: 0.85rem;
+      color: #a855f7;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .profile-bio {
+      font-size: 0.81rem;
+      color: #a1a1aa;
+      line-height: 1.4;
+    }
+
+    /* Lista de datos estilo etiquetas horizontales */
+    .profile-details {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .profile-details li {
+      background: #18181b;
+      border: 1px solid #27272a;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.6rem;
+      color: #d4d4d8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .detail-icon {
+      font-size: 0.74rem;
+    }
+
+    .detail-label {
+      color: #71717a;
+      font-weight: 600;
+    }
+
+    /* Ajuste automático para pantallas de teléfonos muy angostos */
+    @media (max-width: 450px) {
+      .profile-body {
+        flex-direction: column;
+      }
+      .profile-content {
+        padding-top: 0;
+        width: 100%;
+      }
+    }
+
+    /* Tarjetas de Publicaciones (Estilo Tweets) */
+    .post-card {
+      background: #121215;
+      border: 1px solid #27272a;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .post-card:hover {
+      border-color: #3f3f46;
+      transform: translateY(-2px);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .post-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .author-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .post-time {
+      font-size: 0.70rem;
+      color: #71717a;
+    }
+
+    /* Estilo base para todas las etiquetas */
+    .badge {
+      display: inline-block;
+      font-size: 0.70rem;
+      padding: 4px 11px;
+      border-radius: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Variación 1: Morado Neón */
+    .badge-purple {
+      background: rgba(168, 85, 247, 0.12);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+    }
+
+    /* Variación 2: Azul Eléctrico */
+    .badge-blue {
+      background: rgba(59, 130, 246, 0.12);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    /* Variación 3: Verde Neón / Menta */
+    .badge-green {
+      background: rgba(34, 197, 94, 0.12);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+
+    /* Variación 4: Ámbar / Dorado */
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    /* Variación 5: Rosa Cyberpunk */
+    .badge-pink {
+      background: rgba(236, 72, 153, 0.12);
+      color: #f472b6;
+      border: 1px solid rgba(236, 72, 153, 0.25);
+    }
+
+    /* Variación 6: Amarillo Neón */
+    .badge-yellow {
+      background: rgba(234, 179, 8, 0.12);
+      color: #fde047;
+      border: 1px solid rgba(234, 179, 8, 0.25);
+    }
+
+    /* Variación 7: Rojo Carmesí */
+    .badge-red {
+      background: rgba(239, 68, 68, 0.12);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+    }
+
+    /* Variación 8: Gris Urbano / Metal */
+    .badge-gray {
+      background: rgba(161, 161, 170, 0.12);
+      color: #d4d4d8;
+      border: 1px solid rgba(161, 161, 170, 0.25);
+    }
+
+    /* Variación 9: Café / Marrón Cálido */
+    .badge-brown {
+      background: rgba(180, 83, 9, 0.15);
+      color: #d97706;
+      border: 1px solid rgba(180, 83, 9, 0.3);
+    }
+
+    /* Variación 10: Negro Mate / Monocromático */
+    .badge-black {
+      background: rgba(0, 0, 0, 0.6);
+      color: #a1a1aa;
+      border: 1px solid #27272a;
+    }
+
+    /* Variación 11: Blanco Minimalista */
+    .badge-white {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+    }
+
+    .post-text {
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: #e4e4e7;
+    }
+
+    .post-image {
+      width: 100%;
+      max-height: 380px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-top: 12px;
+      border: 1px solid #27272a;
+    }
+
+    /* Footer discreto */
+    .site-footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #52525b;
+      margin-top: 30px;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="feed-container">
+    
+    <!-- Encabezado de tu perfil -->
+    <header class="profile-card">
+  
+      <!-- Foto de Portada (Banner) -->
+      <div class="profile-banner">
+        <!-- Cambia la URL por el enlace de la imagen que quieras para tu portada -->
+        <img src="https://i.pinimg.com/1200x/d7/1f/f2/d71ff27ca0fb33afe50939b980e568b6.jpg" alt="Portada" class="banner-img">
+      </div>
+
+      <!-- Cuerpo del Perfil: Avatar a la izquierda + Info a la derecha -->
+      <div class="profile-body">
+    
+        <!-- Foto de Perfil sobrepuesta en la portada -->
+        <img src='imgs/cinespiderb.jpeg' alt="Foto de perfil" class="profile-avatar">
+
+        <!-- Bloque de Contenido (Nombre, Bio y Datos) -->
+        <div class="profile-content">
+          <div class="profile-info">
+            <h1>Ángel Mora</h1>
+            <div class="username">@angelfcb.4</div>
+            <p class="profile-bio">Página web personal desarrollada para subir ideas, pensamientos u opiniones. 🖤</p>
+          </div>
+
+          <!-- Lista de datos en forma de etiquetas -->
+          <ul class="profile-details">
+            <li><span class="detail-icon">📍</span> <span class="detail-label">Ubicación:</span> Poza York</li>
+            <li><span class="detail-icon">🎨</span> <span class="detail-label">Intereses:</span> Diseño y Tech</li>
+            <li><span class="detail-icon">🎧</span> <span class="detail-label">On Repeat:</span> You Owe Me / Malcolm Todd</li>
+            <li><span class="detail-icon">☕</span> <span class="detail-label">Status:</span> Creando cosas nuevas</li>
+          </ul>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Muro de Publicaciones -->
+    <main>
+
+      <!-- PUBLICACIÓN 1 (Con imagen decorativa) -->
+      <article class="post-card">
+        <div class="post-header">
+          <img src="https://i.pinimg.com/736x/38/eb/cb/38ebcb32f510c5e811561f28e38896f3.jpg" alt="Avatar" class="post-avatar">
+          <div class="post-meta">
+            <span class="author-name">Angel Mora</span>
+            <span class="post-time">9 de agosto, 2026 • 18:51</span>
+          </div>
+        </div>
+
+        <span class="badge badge-yellow"> Opinión </span>
+        
+        <p class="post-text">Creo que lo mejor de esto, siempre será la parte del diseño y la decoración. Es una actividad estretenida y que disfuto hacer.</p>
+        
+        <!-- Puedes quitar la siguiente etiqueta <img> si una publicación no lleva foto -->
+        <img src='imgs/fotocap2.jpeg' alt="Decorativa" class="post-image">
+      </article>
+
+      <!-- PUBLICACIÓN 2 (Solo texto) -->
+      <article class="post-card">
+        <div class="post-header">
+          <img src="https://i.pinimg.com/1200x/8d/5b/a4/8d5ba4691a7f877ea25dc5eacca27688.jpg" alt="Avatar" class="post-avatar">
+          <div class="post-meta">
+            <span class="author-name">Ángel Mora</span>
+            <span class="post-time">8 de agosto, 2026 • 18:29</span>
+          </div>
+        </div>
+
+        <span class="badge badge-gray">Comentario</span>
+
+        <p class="post-text">La primera versión de la página ya está terminada, después veré que otras cosas podría agregar para que pueda verse mejor, pero por ahora estoy satisfecho con el resultado.</p>
+      </article>
+
+    </main>
+
+    <footer class="site-footer">
+      © MiguelGaspi — Todos los derechos reservados.
+    </footer>
+
+  </div>
+
+</body>
+</html>
