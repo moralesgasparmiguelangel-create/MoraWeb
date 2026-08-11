@@ -85,6 +85,14 @@
       margin-top: -42px; /* Hace subirse la foto encima de la portada */
       flex-shrink: 0;
       background: #121215;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .profile-avatar:hover {
+      transform: scale(1.09); /* Escala de ampliación (1.08 = 8% más grande) */
+      z-index: 10; /* Se superpone sobre el contenido cercano */
+      border-color: #a855f7; /* Opcional: cambia el borde a morado neón */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(168, 85, 247, 0.2);
     }
 
     /* 3. Columna derecha de la información */
@@ -96,9 +104,15 @@
       padding-top: 10px;
     }
 
+    @font-face {
+      font-family: 'DragonForcE.ttf';
+      src: url('DragonForcE.ttf') format('truetype');
+    }
+
     .profile-info h1 {
-      font-size: 1.25rem;
-      font-weight: 700;
+      font-family: 'DragonForcE.ttf', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 500;
       color: #ffffff;
     }
 
@@ -133,6 +147,12 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .profile-details li:hover{
+      border-color: #3f3f46;
+      transform: translateY(-2px);
     }
 
     .detail-icon {
@@ -344,6 +364,14 @@
       border-radius: 14px;
       margin-top: 12px;
       border: 1px solid #27272a;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .post-image:hover {
+      transform: scale(1.05); /* Escala de ampliación (1.08 = 8% más grande) */
+      z-index: 10; /* Se superpone sobre el contenido cercano */
+      border-color: #a855f7; /* Opcional: cambia el borde a morado neón */
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(168, 85, 247, 0.2);
     }
 
     /* Título del Ranking */
@@ -520,6 +548,21 @@
     <!-- Muro de Publicaciones -->
     <main>
 
+      <!-- PUBLICACIÓN 8 (Solo texto) -->
+      <article class="post-card" data-category="comentario">
+        <div class="post-header">
+          <img src="https://i.pinimg.com/736x/57/80/84/5780845bb44c4a470c9f0f90348c58d0.jpg" alt="Avatar" class="post-avatar">
+          <div class="post-meta">
+            <span class="author-name">Ángel Mora</span>
+            <span class="post-time">11 / agosto / 2026 • 15:22</span>
+          </div>
+        </div>
+
+        <span class="badge badge-gray">Comentario</span>
+
+        <p class="post-text">La 3ra versión de la página está terminada. Actualización; añadí las animaciones de los posts y cambié la fuente en la parte del encabezado (nombre).</p>
+      </article>
+      
       <!-- PUBLICACIÓN 7 (Solo texto) -->
       <article class="post-card" data-category="comentario">
         <div class="post-header">
