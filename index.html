@@ -43,6 +43,12 @@
       overflow: hidden; /* Corta la imagen de portada dentro de las esquinas redondeadas */
       margin-bottom: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .profile-card:hover {
+      border-color: #3f3f46;
+      transform: translateY(-2px);
     }
 
     /* 1. Foto de Portada */
@@ -147,6 +153,49 @@
         padding-top: 0;
         width: 100%;
       }
+    }
+
+    /* Contenedor del Menú de Filtros */
+    .filter-menu {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      overflow-x: auto; /* Permite scroll horizontal en celulares */
+      padding-bottom: 6px;
+      scrollbar-width: none; /* Oculta la barra de scroll molesta */
+    }
+
+    .filter-menu::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Botones de Filtro */
+    .filter-btn {
+      background: #121215;
+      border: 1px solid #27272a;
+      color: #a1a1aa;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover {
+      border-color: #3f3f46;
+      color: #f4f4f5;
+      transform: translateY(-1px);
+    }
+
+    /* Estado Activo / Seleccionado */
+    .filter-btn.active {
+      background: rgba(168, 85, 247, 0.15);
+      border-color: #a855f7;
+      color: #c084fc;
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
     }
 
     /* Tarjetas de Publicaciones (Estilo Tweets) */
@@ -297,6 +346,117 @@
       border: 1px solid #27272a;
     }
 
+    /* Título del Ranking */
+    .post-title-ranking {
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-size: 0.8rem;
+    }
+
+    /* Lista del Top */
+    .top-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Fila individual del Ranking */
+    .top-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(24, 24, 27, 0.8);
+      border: 1px solid #27272a;
+      border-radius: 14px;
+      padding: 8px 12px;
+      transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .top-item:hover {
+      transform: translateX(4px); /* Desplazamiento suave al pasar el cursor */
+      background: rgba(39, 39, 42, 0.7);
+    }
+
+    /* Número de Posición */
+    .top-number {
+      font-weight: 800;
+      font-size: 0.88rem;
+      min-width: 22px;
+      text-align: center;
+    }
+
+    /* Acentos de color por posición */
+    .top-item.rank-1 {
+      border-left: 3px solid #c42c2c; /* Dorado / Amarillo */
+    }
+
+    .top-item.rank-1 .top-number {
+      color: #c73333;
+    }
+
+    .top-item.rank-2 {
+      border-left: 3px solid #fbf23c; /* Morado Neón */
+    }
+
+    .top-item.rank-2 .top-number {
+      color: #ffeb3c;
+    }
+
+    .top-item.rank-3 {
+      border-left: 3px solid #4ffc55; /* Azul Eléctrico */
+    }
+
+    .top-item.rank-3 .top-number {
+      color: #4cfe52;
+    }
+
+    .top-item.rank-4{
+      border-left: 3px solid #4ad2de;
+    }
+
+    .top-item.rank-4 .top-number{
+      color: #4ad2de;
+    }
+    
+    .top-item.rank-5 {
+      border-left: 3px solid #de4aad;
+    }
+
+    .top-item.rank-5 .top-number {
+      color: #de4ade;
+    }
+
+    /* Miniatura de Imagen */
+    .top-thumb {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid #3f3f46;
+    }
+
+    /* Información del elemento */
+    .top-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+
+    .top-title {
+      font-size: 0.79rem;
+      font-weight: 600;
+      color: #f4f4f5;
+    }
+
+    .top-desc {
+      font-size: 0.70rem;
+      color: #a1a1aa;
+    }
+
     /* Footer discreto */
     .site-footer {
       text-align: center;
@@ -305,6 +465,7 @@
       margin-top: 30px;
       padding-bottom: 20px;
     }
+
   </style>
 </head>
 <body>
@@ -346,11 +507,107 @@
       </div>
     </header>
 
+    <!-- Barra de Menú / Filtros por Categoría -->
+    <nav class="filter-menu">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="momento">Momento</button>
+      <button class="filter-btn" data-filter="pensamiento">Pensamiento</button>
+      <button class="filter-btn" data-filter="opinion">Opinión</button>
+      <button class="filter-btn" data-filter="comentario">Comentario</button>
+      <button class="filter-btn" data-filter="ranking">Ranking</button>
+    </nav>
+
     <!-- Muro de Publicaciones -->
     <main>
 
+      <!-- PUBLICACIÓN 7 (Solo texto) -->
+      <article class="post-card" data-category="comentario">
+        <div class="post-header">
+          <img src="https://i.pinimg.com/1200x/7c/4f/17/7c4f178bd06b10e6a3a5661998d3b4a3.jpg" alt="Avatar" class="post-avatar">
+          <div class="post-meta">
+            <span class="author-name">Ángel Mora</span>
+            <span class="post-time">10 / agosto / 2026 • 22:48</span>
+          </div>
+        </div>
+
+        <span class="badge badge-gray">Comentario</span>
+
+        <p class="post-text">La 2da versión de la página está terminada. Actualización; se añadio la sección de ranking y un menú que actua como filtro para los tipos de publicaciones.</p>
+      </article>
+      
+      <!-- PUBLICACIÓN 6 (TOP / RANKING) -->
+      <article class="post-card" data-category="ranking">
+        <div class="post-header">
+          <img src="https://i.pinimg.com/736x/45/69/cb/4569cb1033f0251fac46f307c3ba495a.jpg" alt="Avatar" class="post-avatar">
+          <div class="post-meta">
+            <span class="author-name">Ángel Mora</span>
+            <span class="post-time">10 de agosto, 2026 • 21:38</span>
+          </div>
+        </div>
+
+        <span class="badge badge-purple">Ranking</span>
+
+        <p class="post-title-ranking">Top 5 mejores jugadores que he visto ⚽</p>
+
+        <!-- Lista del Ranking -->
+        <ol class="top-list">
+    
+          <!-- Puesto 1 -->
+          <li class="top-item rank-1">
+            <span class="top-number">01</span>
+            <!-- Cambia la URL por la foto del álbum/objeto -->
+            <img src="https://i.pinimg.com/736x/8e/fd/bc/8efdbc249bb9dcc78c30bf39e71b88fc.jpg" alt="Puesto 1" class="top-thumb">
+            <div class="top-info">
+              <span class="top-title">L. Messi</span>
+              <span class="top-desc">Inter Miami • El mejor de la historia</span>
+            </div>
+          </li>
+
+          <!-- Puesto 2 -->
+          <li class="top-item rank-2">
+            <span class="top-number">02</span>
+            <img src="https://i.pinimg.com/736x/cf/f8/fe/cff8fede2a86b0289058dd3cee333178.jpg" alt="Puesto 2" class="top-thumb">
+            <div class="top-info">
+              <span class="top-title">Neymar JR</span>
+              <span class="top-desc">Santos FC • Rey sin corona</span>
+            </div>
+          </li>
+
+          <!-- Puesto 3 -->
+          <li class="top-item rank-3">
+            <span class="top-number">03</span>
+            <img src="https://i.pinimg.com/1200x/cb/bc/73/cbbc73a2535fbab512f68961cf093c85.jpg" alt="Puesto 3" class="top-thumb">
+            <div class="top-info">
+              <span class="top-title">C. Ronaldo</span>
+              <span class="top-desc">Al Nassr • Comandante</span>
+            </div>
+          </li>
+          
+          <!-- Puesto 4 -->
+          <li class="top-item rank-4">
+            <span class="top-number">04</span>
+            <img src="https://i.pinimg.com/736x/53/bc/14/53bc142c5e4ef366050de046158ef511.jpg" alt="Puesto 4" class="top-thumb">
+            <div class="top-info">
+              <span class="top-title">P. Dybala</span>
+              <span class="top-desc">AS Roma • Joya</span>
+            </div>
+          </li>
+
+          <!-- Puesto 5 -->
+          <li class="top-item rank-5">
+            <span class="top-number">05</span>
+            <img src="https://i.pinimg.com/1200x/8c/7e/5c/8c7e5c7eb4a50fbc76f74b08f480ca86.jpg" alt="Puesto 5" class="top-thumb">
+            <div class="top-info">
+              <span class="top-title">K. Mbappe</span>
+              <span class="top-desc">Real Madrid • Campeón del mundo</span>
+            </div>
+          </li>
+
+        </ol>
+      </article>
+      
       <!-- PUBLICACIÓN 5 (Con imagen decorativa) -->
-      <article class="post-card">
+      <article class="post-card" data-category="momento">
         <div class="post-header">
           <img src="https://i.pinimg.com/736x/dd/d1/14/ddd114d66d39e9838c863a69b7654169.jpg" alt="Avatar" class="post-avatar">
           <div class="post-meta">
@@ -368,7 +625,7 @@
       </article>
       
       <!-- PUBLICACIÓN 4 (Solo texto) -->
-      <article class="post-card">
+      <article class="post-card" data-category="pensamiento">
         <div class="post-header">
           <img src="https://i.pinimg.com/736x/37/e5/14/37e5144c574081d0eea895ba8b425b58.jpg" alt="Avatar" class="post-avatar">
           <div class="post-meta">
@@ -383,7 +640,7 @@
       </article>
       
       <!-- PUBLICACIÓN 3 (Con imagen decorativa) -->
-      <article class="post-card">
+      <article class="post-card" data-category="momento">
         <div class="post-header">
           <img src="https://i.pinimg.com/736x/db/ff/dd/dbffddee4350f4000f6c8bf2b249f613.jpg" alt="Avatar" class="post-avatar">
           <div class="post-meta">
@@ -401,7 +658,7 @@
       </article>
 
       <!-- PUBLICACIÓN 2 (Con imagen decorativa) -->
-      <article class="post-card">
+      <article class="post-card" data-category="opinion">
         <div class="post-header">
           <img src="https://i.pinimg.com/736x/38/eb/cb/38ebcb32f510c5e811561f28e38896f3.jpg" alt="Avatar" class="post-avatar">
           <div class="post-meta">
@@ -419,7 +676,7 @@
       </article>
 
       <!-- PUBLICACIÓN 1 (Solo texto) -->
-      <article class="post-card">
+      <article class="post-card" data-category="comentario">
         <div class="post-header">
           <img src="https://i.pinimg.com/1200x/8d/5b/a4/8d5ba4691a7f877ea25dc5eacca27688.jpg" alt="Avatar" class="post-avatar">
           <div class="post-meta">
@@ -440,6 +697,34 @@
     </footer>
 
   </div>
+
+  <script>
+    // Lógica del filtro de publicaciones
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const posts = document.querySelectorAll('.post-card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // 1. Cambiar el estado activo visual en los botones
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // 2. Obtener la categoría elegida
+        const selectedFilter = button.getAttribute('data-filter');
+
+        // 3. Ocultar o mostrar publicaciones según la categoría
+        posts.forEach(post => {
+          const postCategory = post.getAttribute('data-category');
+
+          if (selectedFilter === 'all' || postCategory === selectedFilter) {
+            post.style.display = 'block'; // Mostrar
+          } else {
+            post.style.display = 'none'; // Ocultar
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
