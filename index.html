@@ -103,7 +103,8 @@
       gap: 14px;
       padding-top: 10px;
     }
-
+    
+    /*Se coloca antes de lo que quieres que cambie la fuente*/
     @font-face {
       font-family: 'DragonForcE.ttf';
       src: url('DragonForcE.ttf') format('truetype');
@@ -485,6 +486,39 @@
       color: #a1a1aa;
     }
 
+    /* Banner Minimalista de Contacto */
+
+    /*Se coloca antes de lo que quieres que cambie la fuente*/
+    @font-face {
+      font-family: 'GraffitiYouth-Regular.otf';
+      src: url('GraffitiYouth-Regular.otf') format('truetype');
+    }
+
+    .contact-banner {
+      margin-top: 32px;
+      margin-bottom: 20px;
+      padding: 12px 18px;
+      background: rgba(24, 24, 27, 0.6);
+      border: 1px dashed #3f3f46; /* Borde punteado discreto */
+      border-radius: 12px;
+      text-align: center;
+      font-family: 'GraffitiYouth-Regular.otf', sans-serif;
+      font-weight: 100;
+      font-size: 1.5rem;
+      color: #a1a1aa;
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+
+    .contact-banner:hover {
+      border-color: #a855f7;
+      color: #e4e4e7;
+    }
+
+    .contact-banner b {
+      color: #c084fc; /* Morado neón para destacar el usuario */
+      font-weight: 80;
+    }
+
     /* Footer discreto */
     .site-footer {
       text-align: center;
@@ -519,7 +553,7 @@
         <div class="profile-content">
           <div class="profile-info">
             <h1>Ángel Mora</h1>
-            <div class="username">@angelfcb.4</div>
+            <div class="username">@angel.seishiro</div>
             <p class="profile-bio">Página web personal desarrollada para subir ideas, pensamientos, opiniones o momentos en mi vida que quisiera compartir con las personas que entren a mi perfil. 🖤</p>
           </div>
 
@@ -732,6 +766,11 @@
 
         <p class="post-text">La primera versión de la página ya está terminada, después veré que otras cosas podría agregar para que pueda verse mejor, pero por ahora estoy satisfecho con el resultado.</p>
       </article>
+
+      <!-- BANNER MINIMALISTA DE CONTACTO -->
+      <div class="contact-banner">
+        <span>✨ ¿Te interesa crear tu propio blog personal o página web para tu negocio? háblame por IG <b>@angelfcb.4</b></span>
+      </div>
 
     </main>
 
